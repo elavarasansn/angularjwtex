@@ -5,6 +5,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './layout/login/login.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {ReactiveFormsModule} from "@angular/forms";
+import { HttpClientModule,HTTP_INTERCEPTORS } from  '@angular/common/http';
+import {AuthService} from "./service/auth.service";
+import {JwtinterceptorService} from "./service/jwtinterceptor.service";
 
 @NgModule({
   declarations: [
@@ -14,9 +18,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [AuthService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtinterceptorService, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
